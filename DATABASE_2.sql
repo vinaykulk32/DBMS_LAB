@@ -17,7 +17,7 @@ create table accounts
 account_no int(5) primary key,
 branch_name varchar(10),
 balance int(5),
-foreign key(branch_name) references branch(branch_name) on delete cascade,
+foreign key(branch_name) references branch(branch_name) on delete cascade
 );
 show tables;
 desc accounts;
@@ -53,5 +53,43 @@ primary key(cust_name,loan_no)
 show tables;
 desc borrower;
 
-insert into branch values('a','ABC');
-select * from branch;
+insert into branch values('a','A',100);
+insert into branch values('b','B',101);
+insert into branch values('c','C',102);
+insert into branch values('d','D',103);
+insert into branch values('e','E',104);
+select * from branch ;
+
+insert into accounts values('001','a',100);
+insert into accounts values('002','b',101);
+insert into accounts values('003','c',102);
+insert into accounts values('004','d',103);
+insert into accounts values('005','e',104);
+insert into accounts values('006','a',100);
+insert into accounts values('007','a',100);
+insert into accounts values('008','a',100);
+insert into accounts values('009','a',100);
+select * from accounts;
+
+insert into depositor values('l','ab','AB');
+insert into depositor values('m','cd','CD');
+insert into depositor values('n','ef','EF');
+insert into depositor values('o','gh','GH');
+insert into depositor values('p','ij','IJ');
+select * from depositor;
+
+insert into loan values(00001,'a',1000);
+insert into loan values(00002,'b',1001);
+insert into loan values(00003,'c',1002);
+insert into loan values(00004,'d',1003);
+insert into loan values(00005,'e',1004);
+select * from loan;
+
+insert into borrower values('l',00001);
+insert into borrower values('m',00002);
+insert into borrower values('n',00003);
+insert into borrower values('o',00004);
+insert into borrower values('p',00005);
+select * from borrower;
+
+select count(*) from accounts where branch_name='a';
