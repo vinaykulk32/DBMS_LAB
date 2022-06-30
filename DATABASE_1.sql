@@ -11,6 +11,7 @@ select * from PERSON;
 create table CAR
 (
 regno char(5) primary key,
+model varchar(20),
 year1 year
 );
 select * from CAR;
@@ -50,11 +51,11 @@ insert into person values('04','d','AEF');
 insert into person values('05','e','AFH');
 select * from person;
 
-insert into car values('001','2000');
-insert into car values('002','2001');
-insert into car values('003','2002');
-insert into car values('004','2003');
-insert into car values('005','2004');
+insert into car values('001','A','2000');
+insert into car values('002','B','2001');
+insert into car values('003','C','2002');
+insert into car values('004','D','2003');
+insert into car values('005','E','2004');
 select * from car;
 
 
@@ -64,7 +65,6 @@ insert into accident values('0003','2000-01-03','C');
 insert into accident values('0004','2000-01-04','D');
 insert into accident values('0005','2000-01-05','E');
 insert into accident values('0006','2008-01-05','E');
-insert into accident values('0007','2008','H');
 select * from accident;
 
 insert into owns values('01','001');
@@ -81,7 +81,17 @@ insert into PARTICIPATION values('04','004','00004','4000');
 insert into PARTICIPATION values('05','005','00005','5000');
 select * from PARTICIPATION;
 
+#Update the damage amount for the car with a specific Regno in the accident with report number 12 to 25000.
 update PARTICIPATION set damage=12000 where reportno=1;
 select * from PARTICIPATION;
 
-select count(date1) from accident where date1='2008-01-05';
+#Add a new accident to the database
+insert into accident values('0007','2008-01-05','H');
+
+#Find the total number of people who owned cars that involved in accidents in 2008.
+select count(date1) from accident where date1 like '2008%';
+
+#Find the number of accidents in which cars belonging to a specific model were involved
+select count(*) 
+from accident a,car c,participation p
+where c.model='A' and p.reportno=a.reportno and p.regno=c.regno;
