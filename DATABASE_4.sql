@@ -92,11 +92,15 @@ from student s,enrolled e
 where s.snum=e.snum and s.level_='jn';
 
 #Find the names of all classes that either meet in room R128 or have five or more Students enrolled
-select distinct c.cname
-from student s,class c
-where c.room='R128';
+select distinct e.cname
+from student s,enrolled e,class c
+where c.room='R128' and e.snum=s.snum and c.cname=e.cname
+group by e.cname
+having count(*)>=5;
 
 #Find the names of all students who are enrolled in two classes that meet at the same time.
 select s.sname
 from student s,enrolled e,class c
-where s.snum=e.snum;
+where s.snum=e.snum
+group by s.sname
+having count(*)>2;
