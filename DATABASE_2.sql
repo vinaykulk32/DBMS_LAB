@@ -92,4 +92,23 @@ insert into borrower values('o',00004);
 insert into borrower values('p',00005);
 select * from borrower;
 
-select count(*) from accounts where branch_name='a';
+#Find all the customers who have at least two accounts at the Main branch
+select cust_name 
+from depositor d,accounts a 
+where a.account_no=d.accno AND a.branch_name='Main_branch' 
+group by d.customer_name 
+having count(*) >=2;
+
+#Find all the customers who have an account at all the branches located in a specific city.
+select * from depositor d,accounts a,branch b 
+where b.branch_city='Bangalore' 
+group by d.customer_name 
+having count(distinct b.branch_name)=(
+select count(branch_name) from branch 
+where branch_city='Bangalore');
+
+#Demonstrate how you delete all account tuples at every branch located in a specific city.
+delete from accounts 
+where branch_name IN(
+select branch_name from branch 
+where branch_city='Delhi');
