@@ -60,6 +60,8 @@ insert into aircraft values(71,'ggg',700);
 insert into aircraft values(81,'hhh',800);
 insert into aircraft values(91,'iii',900);
 insert into aircraft values(121,'jjj',1000);
+insert into aircraft values(191,'boeing',1000);
+
 
 insert into aircraft values(131,'kkk',10000);
 insert into aircraft values(141,'lll',20000);
@@ -114,6 +116,19 @@ a.aid in ( select aid from certified where eid in
 #Frankfurt.
 select distinct e.ename 
 from employee e
-where e.salary<(select min(price) from flights);
+where e.salary<(select min(price) from flights 
+where from_='Bengaluru' and to_='Frankfurt');
+
+#from all aircraft with cruisingrange over 1000kms, find the name of the aircraft and the averahe salary of all pilots
+#certified for this aircraft
+select a.aid,a.aname,avg(e.salary)
+from aircraft a,certified c,employee e
+where a.aid=c.aid and c.eid=e.eid and a.cruisingrange>1000
+group by a.aid,a.aname;
+
+#find the names of pilots certified for some boeing aircraft
+select distinct e.ename 
+from employee e,certified c,aircraft a
+where e.eid=c.eid and a.aid=c.aid and a.aname='boeing';
 
 -- drop database airline188;
